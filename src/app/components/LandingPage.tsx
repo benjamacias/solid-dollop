@@ -1,3 +1,5 @@
+// Actualización completa para src/app/components/LandingPage.tsx
+
 import Link from 'next/link';
 
 import { CONTACT_ENABLED } from '@/app/config';
@@ -6,6 +8,7 @@ import Card from './Card';
 import Case from './Case';
 import ContactForm from './ContactForm';
 import FAQ from './FAQ';
+import Header from './Header';
 import PriceCard from './PriceCard';
 import SectionHeader from './SectionHeader';
 import Stat from './Stat';
@@ -107,33 +110,7 @@ const pricing = [
 export default function LandingPage() {
   return (
     <div className="bg-neutral-950 text-white">
-      <header className="sticky top-0 z-20 border-b border-neutral-900/80 bg-neutral-950/80 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-          <span className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-400">
-            Benjamín Macías
-          </span>
-          <nav className="flex items-center gap-5 text-sm text-neutral-300">
-            <Link className="hover:text-white" href="#servicios">
-              Servicios
-            </Link>
-            <Link className="hover:text-white" href="#stack">
-              Stack
-            </Link>
-            <Link className="hover:text-white" href="#casos">
-              Casos
-            </Link>
-            <Link className="hover:text-white" href="#faq">
-              FAQ
-            </Link>
-            <Link
-              className="rounded-full border border-cyan-500/60 px-4 py-1 text-cyan-300 transition hover:bg-cyan-500/10"
-              href="#contacto"
-            >
-              Agenda una llamada
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <Header />
 
       <main className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
         <section className="flex flex-col gap-12 py-16 lg:flex-row lg:items-center">
@@ -172,6 +149,7 @@ export default function LandingPage() {
 
         <section id="servicios" className="py-16">
           <SectionHeader
+            sectionId="servicios"
             title="Servicios clave"
             caption="Intervengo en etapas críticas para que tu producto avance sin fricción."
           />
@@ -184,6 +162,7 @@ export default function LandingPage() {
 
         <section id="stack" className="py-16">
           <SectionHeader
+            sectionId="stack"
             title="Stack & prácticas"
             caption="Tecnologías con las que trabajo a diario y métodos para mantener la calidad."
           />
@@ -196,6 +175,7 @@ export default function LandingPage() {
 
         <section id="casos" className="py-16">
           <SectionHeader
+            sectionId="casos"
             title="Casos recientes"
             caption="Proyectos donde lideré estrategia técnica y ejecución con impacto medible."
           />
@@ -220,6 +200,7 @@ export default function LandingPage() {
 
         <section id="faq" className="py-16">
           <SectionHeader
+            sectionId="faq"
             title="Preguntas frecuentes"
             caption="Resuelvo las dudas más comunes antes de iniciar un engagement."
           />
@@ -232,6 +213,7 @@ export default function LandingPage() {
 
         <section id="contacto" className="py-16">
           <SectionHeader
+            sectionId="contacto"
             title="Contacto"
             caption="Contame qué querés construir y diseñamos juntos el siguiente paso."
           />

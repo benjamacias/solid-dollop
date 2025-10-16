@@ -32,3 +32,24 @@ a {
 a:hover {
   color: inherit;
 }
+
+@keyframes sectionHighlight {
+  0% {
+    color: #22d3ee;
+    text-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+  }
+  100% {
+    color: inherit;
+    text-shadow: none;
+  }
+}
+
+/* Aplica la animación cuando la sección tiene el hash activo */
+section:target h2 {
+  animation: sectionHighlight 2s ease-out;
+}
+
+/* Opcional: Efecto más sutil para los títulos internos */
+section:target h3 {
+  animation: sectionHighlight 1.5s ease-out;
+}
