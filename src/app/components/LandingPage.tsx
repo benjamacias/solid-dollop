@@ -48,19 +48,21 @@ const services = [
 
 const cases = [
   {
-    title: 'Plataforma de logística B2B',
-    tech: 'Node.js · React · Azure',
-    desc: 'Rediseño completo de operaciones en 4 meses, reduciendo tiempos de carga un 65%.',
+    title: 'Sistema de facturación para contadores',
+    tech: 'Django · SOAP · AFIP',
+    desc: 'CRUD completo de clientes y cuentas corrientes con integración directa a AFIP. Modelo de usuario personalizado con roles y envío automatizado de emails.',
+    image: '/facturacion-contadores.png',
   },
   {
-    title: 'Suite fintech regional',
-    tech: '.NET · Angular · SQL Server',
-    desc: 'Gobierno de roadmap multiequipo con despliegues semanales y cero incidentes críticos.',
+    title: 'Sistema de gestión de logística',
+    tech: 'Django · SQL Server · ARCA',
+    desc: 'CRUD para envíos, clientes, vehículos y conductores con facturación integrada usando Carta de Porte Electrónica de AFIP. Unifiqué datos operativos eliminando dobles cargas.',
+    image: '/logistica-dashboard.png',
   },
   {
-    title: 'Portal de salud digital',
-    tech: 'Python · Django · PostgreSQL',
-    desc: 'Integración con historias clínicas y pagos, cumpliendo normas HIPAA/ISO.',
+    title: 'Dashboards analíticos',
+    tech: 'Python · Chart.js · PostgreSQL',
+    desc: 'Visualización de métricas de negocio en tiempo real con gráficos interactivos para toma de decisiones basada en datos.',
   },
 ];
 

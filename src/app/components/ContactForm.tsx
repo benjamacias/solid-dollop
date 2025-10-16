@@ -1,8 +1,9 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
 
-import { CONTACT_ENABLED } from '@/app/config';
+import { CONTACT_ENABLED, EMAILJS_CONFIG } from '@/app/config';
 import {
   isValidPayload,
   sanitize,
@@ -37,23 +38,37 @@ export default function ContactForm({ disabled = false }: ContactFormProps) {
       return;
     }
 
+    // Validar configuración de EmailJS
+    if (!EMAILJS_CONFIG.serviceId || !EMAILJS_CONFIG.templateId || !EMAILJS_CONFIG.publicKey) {
+      console.error('Configuración de EmailJS incompleta');
+      setStatus('error');
+      return;
+    }
+
     setStatus('sending');
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+      // Enviar email usando EmailJS
+      const result = await emailjs.send(
+        EMAILJS_CONFIG.serviceId,
+        EMAILJS_CONFIG.templateId,
+        {
+          from_name: payload.from_name,
+          reply_to: payload.reply_to,
+          subject: payload.subject,
+          message: payload.message,
+        },
+        EMAILJS_CONFIG.publicKey
+      );
 
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
+      if (result.status === 200) {
+        setStatus('ok');
+        formRef.current?.reset();
+      } else {
+        throw new Error(`EmailJS error: ${result.text}`);
       }
-
-      setStatus('ok');
-      formRef.current?.reset();
     } catch (error) {
-      console.error(error);
+      console.error('Error al enviar email:', error);
       setStatus('error');
     }
   }
@@ -118,11 +133,11 @@ export default function ContactForm({ disabled = false }: ContactFormProps) {
       ) : null}
       {!CONTACT_ENABLED ? (
         <p className="text-xs text-amber-400">
-          El envío está deshabilitado en este entorno. Configurá
+          El envío está deshabilitado. Configurá
           <code className="mx-1 rounded bg-neutral-800 px-1 py-0.5 text-[0.7rem]">
             NEXT_PUBLIC_CONTACT_ENABLED=true
           </code>
-          y las claves de Resend en <code>.env.local</code>.
+          y las variables de EmailJS en <code>.env.local</code>.
         </p>
       ) : null}
     </form>

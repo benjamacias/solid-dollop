@@ -1,3 +1,4 @@
+// src/app/components/SectionHeader.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
