@@ -1,17 +1,12 @@
 interface SectionHeaderProps {
   title: string;
   caption?: string;
-  highlighted?: boolean;
 }
 
-export default function SectionHeader({ title, caption, highlighted = false }: SectionHeaderProps) {
+export default function SectionHeader({ title, caption }: SectionHeaderProps) {
   return (
     <div className="flex flex-col items-start gap-2">
-      <h2
-        className={`text-2xl font-bold tracking-tight transition-colors duration-500 sm:text-3xl ${
-          highlighted ? 'text-cyan-300' : 'text-white'
-        }`}
-      >
+      <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
         {title}
       </h2>
       {caption ? (

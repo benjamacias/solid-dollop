@@ -1,8 +1,4 @@
-'use client';
-
 import Link from 'next/link';
-import { useCallback, useEffect, useState } from 'react';
-import type { MouseEvent } from 'react';
 
 import { CONTACT_ENABLED } from '@/app/config';
 
@@ -108,62 +104,7 @@ const pricing = [
   },
 ];
 
-const navItems = [
-  { id: 'servicios', label: 'Servicios' },
-  { id: 'stack', label: 'Stack' },
-  { id: 'casos', label: 'Casos' },
-  { id: 'faq', label: 'FAQ' },
-];
-
 export default function LandingPage() {
-  const [highlightedSection, setHighlightedSection] = useState<{ id: string; at: number } | null>(null);
-
-  const highlightSection = useCallback((id: string) => {
-    setHighlightedSection({ id, at: Date.now() });
-  }, []);
-
-  const scrollToSection = useCallback(
-    (id: string) => {
-      if (typeof document === 'undefined') {
-        return;
-      }
-
-      const section = document.getElementById(id);
-      if (section) {
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-
-      if (typeof window !== 'undefined') {
-        window.history.replaceState(null, '', `#${id}`);
-      }
-
-      highlightSection(id);
-    },
-    [highlightSection],
-  );
-
-  const handleAnchorClick = useCallback(
-    (id: string) => (event: MouseEvent<HTMLAnchorElement>) => {
-      event.preventDefault();
-      scrollToSection(id);
-    },
-    [scrollToSection],
-  );
-
-  useEffect(() => {
-    if (!highlightedSection) {
-      return;
-    }
-
-    const timeout = window.setTimeout(() => {
-      setHighlightedSection(null);
-    }, 2500);
-
-    return () => {
-      window.clearTimeout(timeout);
-    };
-  }, [highlightedSection]);
-
   return (
     <div className="bg-neutral-950 text-white">
       <header className="sticky top-0 z-20 border-b border-neutral-900/80 bg-neutral-950/80 backdrop-blur">
@@ -172,20 +113,21 @@ export default function LandingPage() {
             Benjamín Macías
           </span>
           <nav className="flex items-center gap-5 text-sm text-neutral-300">
-            {navItems.map((item) => (
-              <Link
-                key={item.id}
-                className="hover:text-white"
-                href={`#${item.id}`}
-                onClick={handleAnchorClick(item.id)}
-              >
-                {item.label}
-              </Link>
-            ))}
+            <Link className="hover:text-white" href="#servicios">
+              Servicios
+            </Link>
+            <Link className="hover:text-white" href="#stack">
+              Stack
+            </Link>
+            <Link className="hover:text-white" href="#casos">
+              Casos
+            </Link>
+            <Link className="hover:text-white" href="#faq">
+              FAQ
+            </Link>
             <Link
               className="rounded-full border border-cyan-500/60 px-4 py-1 text-cyan-300 transition hover:bg-cyan-500/10"
               href="#contacto"
-              onClick={handleAnchorClick('contacto')}
             >
               Agenda una llamada
             </Link>
@@ -209,14 +151,12 @@ export default function LandingPage() {
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="#contacto"
-                onClick={handleAnchorClick('contacto')}
                 className="inline-flex items-center justify-center rounded-full bg-cyan-500 px-6 py-3 font-semibold text-black shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400"
               >
                 Hablemos de tu proyecto
               </Link>
               <Link
                 href="#casos"
-                onClick={handleAnchorClick('casos')}
                 className="inline-flex items-center justify-center rounded-full border border-neutral-700 px-6 py-3 font-semibold text-neutral-200 transition hover:border-neutral-500 hover:text-white"
               >
                 Ver casos reales
@@ -230,11 +170,10 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="servicios" className="py-16 scroll-mt-28">
+        <section id="servicios" className="py-16">
           <SectionHeader
             title="Servicios clave"
             caption="Intervengo en etapas críticas para que tu producto avance sin fricción."
-            highlighted={highlightedSection?.id === 'servicios'}
           />
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((service) => (
@@ -243,11 +182,10 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="stack" className="py-16 scroll-mt-28">
+        <section id="stack" className="py-16">
           <SectionHeader
             title="Stack & prácticas"
             caption="Tecnologías con las que trabajo a diario y métodos para mantener la calidad."
-            highlighted={highlightedSection?.id === 'stack'}
           />
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {stack.map((group) => (
@@ -256,11 +194,10 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="casos" className="py-16 scroll-mt-28">
+        <section id="casos" className="py-16">
           <SectionHeader
             title="Casos recientes"
             caption="Proyectos donde lideré estrategia técnica y ejecución con impacto medible."
-            highlighted={highlightedSection?.id === 'casos'}
           />
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {cases.map((item) => (
@@ -281,11 +218,10 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="faq" className="py-16 scroll-mt-28">
+        <section id="faq" className="py-16">
           <SectionHeader
             title="Preguntas frecuentes"
             caption="Resuelvo las dudas más comunes antes de iniciar un engagement."
-            highlighted={highlightedSection?.id === 'faq'}
           />
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {faqs.map((faq) => (
@@ -294,11 +230,10 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="contacto" className="py-16 scroll-mt-28">
+        <section id="contacto" className="py-16">
           <SectionHeader
             title="Contacto"
             caption="Contame qué querés construir y diseñamos juntos el siguiente paso."
-            highlighted={highlightedSection?.id === 'contacto'}
           />
           <div className="mt-8 grid gap-6 lg:grid-cols-2">
             <div className="rounded-3xl border border-neutral-800 bg-surface-raised/80 p-6">
