@@ -140,6 +140,14 @@ export default function LandingPage() {
               >
                 Ver casos reales
               </Link>
+              <Link
+                href="/pdf-editor.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-full border border-cyan-500/30 px-6 py-3 font-semibold text-cyan-200 transition hover:border-cyan-400 hover:text-cyan-100"
+              >
+                Abrir editor PDF
+              </Link>
             </div>
           </div>
           <div className="grid flex-1 gap-4 sm:grid-cols-3">

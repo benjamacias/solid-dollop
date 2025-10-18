@@ -6,37 +6,45 @@ interface NavLinkProps {
   href: string;
   children: React.ReactNode;
   className?: string;
+  target?: string;
+  rel?: string;
 }
 
-function NavLink({ href, children, className = '' }: NavLinkProps) {
+function NavLink({ href, children, className = '', target, rel }: NavLinkProps) {
+  const isHashLink = href.startsWith('#');
+
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!isHashLink) {
+      return;
+    }
+
     e.preventDefault();
-    
+
     const targetId = href.replace('#', '');
     const targetElement = document.getElementById(targetId);
-    
+
     if (targetElement) {
       // Calcular la posición para centrar el elemento
       const elementRect = targetElement.getBoundingClientRect();
       const absoluteElementTop = elementRect.top + window.pageYOffset;
-      const middle = absoluteElementTop - (window.innerHeight / 2) + (elementRect.height / 2);
-      
+      const middle = absoluteElementTop - window.innerHeight / 2 + elementRect.height / 2;
+
       // Hacer scroll suave a la posición centrada
       window.scrollTo({
         top: middle,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
-      
+
       // Actualizar el hash en la URL
       window.history.pushState(null, '', href);
-      
+
       // Disparar evento personalizado para el highlight
       window.dispatchEvent(new Event('sectionNavigate'));
     }
   };
 
   return (
-    <a href={href} onClick={handleClick} className={className}>
+    <a href={href} onClick={isHashLink ? handleClick : undefined} className={className} target={target} rel={rel}>
       {children}
     </a>
   );
@@ -61,6 +69,9 @@ export default function Header() {
           </NavLink>
           <NavLink className="hover:text-white" href="#faq">
             FAQ
+          </NavLink>
+          <NavLink className="hover:text-white" href="/pdf-editor.html" target="_blank" rel="noopener noreferrer">
+            Editor PDF
           </NavLink>
           <NavLink
             className="rounded-full border border-cyan-500/60 px-4 py-1 text-cyan-300 transition hover:bg-cyan-500/10"
