@@ -15,8 +15,8 @@ import Stat from './Stat';
 import TagGroup from './TagGroup';
 
 const stats = [
-  { kpi: '+12', label: 'años construyendo productos digitales' },
-  { kpi: '30+', label: 'equipos técnicos acompañados' },
+  { kpi: '+4', label: 'años construyendo productos digitales' },
+  { kpi: '3+', label: 'equipos técnicos acompañados' },
   { kpi: '100%', label: 'entregas a tiempo en 2024' },
 ];
 
