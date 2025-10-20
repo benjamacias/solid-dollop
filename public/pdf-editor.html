@@ -16,13 +16,48 @@
     .ghost{opacity:.7}
     .row{display:flex;gap:16px;max-width:1200px;margin:12px auto;padding:0 14px}
     .left{width:290px;flex:0 0 auto}
-    .right{flex:1 1 auto;min-height:80vh;background:#0c0f17;border:1px solid #1e2435;border-radius:16px;display:grid;place-items:center;position:relative;overflow:auto}
+    .right{flex:1 1 auto;min-height:80vh;background:#0c0f17;border:1px solid #1e2435;border-radius:16px;display:grid;place-items:center;position:relative;overflow:auto;width:100%;min-width:0;padding:24px}
     .panel{background:var(--panel);border:1px solid #232a3d;border-radius:16px;padding:14px}
     label{display:block;margin:.3rem 0 .2rem;color:var(--muted)}
     input[type=range]{width:100%}
     select, input[type=text], input[type=number], input[type=color]{width:100%;padding:8px;border-radius:10px;border:1px solid #2a3145;background:#0f1422;color:var(--ink)}
     canvas{max-width:100%;height:auto;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.35)}
     .page-wrap{position:relative}
+    #stage{display:inline-block;margin:0 auto;transform-origin:top center;transition:transform .2s ease, padding .2s ease;max-width:100%}
+    #stage canvas{display:block}
+    @media (max-width:768px){
+      .row{flex-direction:column;gap:14px;margin:12px auto 18px}
+      .left{width:100%}
+      .right{padding:18px;min-height:auto}
+      #stage{transform:scale(.95)}
+      .thumbs{padding:6px;margin-top:8px}
+    }
+    .mobile-shortcuts{display:none;max-width:640px;margin:6px auto 0;padding:0 14px;font-size:12px;color:var(--muted);text-align:center;gap:6px;justify-content:center;align-items:center;flex-wrap:wrap}
+    .mobile-shortcuts strong{color:var(--ink);font-weight:600}
+    @media (max-width:560px){
+      header{position:static}
+      .bar{justify-content:center;gap:10px;padding:12px 10px}
+      .bar > :not(.btn){display:none}
+      .bar > .pager{display:flex}
+      .row{gap:10px;margin:0 auto;padding:0;max-width:100%}
+      .left{display:none}
+      .right{padding:10px;min-height:calc(100vh - 120px);border-radius:0;border:0}
+      .right::before{content:"";position:absolute;inset:0;border-radius:0;pointer-events:none;box-shadow:inset 0 0 0 1px #1e2435}
+      #stage{transform:scale(1);padding:0;width:100%}
+      .thumbs,.panel,footer,.hint,.callout,.steps,.merge-list,.badge,.tip,.tool{display:none}
+      .pager span,.pager label,.pager input{display:none}
+      .pager{gap:10px}
+      .mobile-shortcuts{display:flex}
+      #undoBtn,#redoBtn{display:inline-flex}
+    }
+    @media (max-width:420px){
+      .bar{gap:8px;padding:10px}
+      .bar .btn{flex:1 1 44%;text-align:center}
+      .pager{width:100%;justify-content:center}
+      .pager span,.pager label,.pager input{display:none}
+      .right{padding:8px}
+      #stage{transform:scale(1.05)}
+    }
     .overlay{position:absolute;left:0;top:0}
     .floating{position:absolute;left:0;top:0;pointer-events:auto}
     .hint{color:var(--muted);font-size:12px}
@@ -75,6 +110,20 @@
       <button id="exportJpgBtn" class="btn">Exportar JPGs (ZIP)</button>
     </div>
   </header>
+
+  <div class="mobile-shortcuts">
+    <strong>Atajos:</strong>
+    <span class="kbd">B</span>
+    <span>Borrar</span>
+    <span class="kbd">T</span>
+    <span>Texto</span>
+    <span class="kbd">I</span>
+    <span>Imagen</span>
+    <span class="kbd">Ctrl+Z</span>
+    <span>Deshacer</span>
+    <span class="kbd">Ctrl+Y</span>
+    <span>Rehacer</span>
+  </div>
 
   <div class="row">
     <div class="left panel">
