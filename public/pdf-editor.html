@@ -91,9 +91,9 @@
       <label class="btn" for="mergeInput">Agregar PDFs…</label>
       <input id="mergeInput" type="file" accept="application/pdf" multiple />
 
-      <button id="toolErase" class="btn" aria-pressed="true">Borrar (B)</button>
-      <button id="toolText" class="btn">Texto (T)</button>
-      <button id="toolImage" class="btn">Imagen (I)</button>
+      <button id="toolErase" class="btn" aria-pressed="false">Borrar (B)</button>
+      <button id="toolText" class="btn" aria-pressed="false">Texto (T)</button>
+      <button id="toolImage" class="btn" aria-pressed="false">Imagen (I)</button>
       <button id="undoBtn" class="btn ghost">Deshacer (Ctrl+Z)</button>
       <button id="redoBtn" class="btn ghost">Rehacer (Ctrl+Y)</button>
 
@@ -129,7 +129,7 @@
     <div class="left panel">
       <h3 style="margin:0 0 8px">Herramientas</h3>
 
-      <section id="eraseControls">
+      <section id="eraseControls" style="display:none">
         <label>Tamaño del pincel</label>
         <input id="brushSize" type="range" min="6" max="120" value="36" />
         <div class="callout">
@@ -266,7 +266,7 @@
     const overlays = new Map();   // globalIndex -> dataURL
     const histories = new Map();  // globalIndex -> {stack:[], index:int}
 
-    let tool='erase';
+    let tool='';
     let isTypingText=false;
     window.__setTyping = (v)=>{ isTypingText = !!v; };
     window.__isTyping = ()=> isTypingText;
@@ -274,9 +274,10 @@
     window.__test_drawFloat = ()=>true;
 
     function setTool(name){
-      tool=name;
+      tool = name || '';
+      const activeId = tool ? 'tool'+tool.charAt(0).toUpperCase()+tool.slice(1) : '';
       ['toolErase','toolText','toolImage'].forEach(id=>{
-        document.getElementById(id).setAttribute('aria-pressed', String(id==='tool'+name.charAt(0).toUpperCase()+name.slice(1)));
+        document.getElementById(id).setAttribute('aria-pressed', String(id===activeId));
       });
       $('#eraseControls').style.display = (tool==='erase')? 'block':'none';
       $('#textControls').style.display  = (tool==='text')? 'block':'none';
@@ -286,7 +287,6 @@
     $('#toolErase').onclick=()=>setTool('erase');
     $('#toolText').onclick=()=>setTool('text');
     $('#toolImage').onclick=()=>setTool('image');
-    setTool('erase');
 
     // Utilidad: dataURL -> Uint8Array
     function dataURLToUint8Array(dataURL){
