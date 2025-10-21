@@ -32,6 +32,8 @@
       #stage{transform:scale(.95)}
       .thumbs{padding:6px;margin-top:8px}
     }
+    .mobile-shortcuts{display:none;max-width:640px;margin:6px auto 0;padding:0 14px;font-size:12px;color:var(--muted);text-align:center;gap:6px;justify-content:center;align-items:center;flex-wrap:wrap}
+    .mobile-shortcuts strong{color:var(--ink);font-weight:600}
     @media (max-width:560px){
       header{position:static}
       .bar{justify-content:center;gap:10px;padding:12px 10px}
@@ -45,7 +47,8 @@
       .thumbs,.panel,footer,.hint,.callout,.steps,.merge-list,.badge,.tip,.tool{display:none}
       .pager span,.pager label,.pager input{display:none}
       .pager{gap:10px}
-      #undoBtn,#redoBtn{display:none}
+      .mobile-shortcuts{display:flex}
+      #undoBtn,#redoBtn{display:inline-flex}
     }
     @media (max-width:420px){
       .bar{gap:8px;padding:10px}
@@ -107,6 +110,20 @@
       <button id="exportJpgBtn" class="btn">Exportar JPGs (ZIP)</button>
     </div>
   </header>
+
+  <div class="mobile-shortcuts">
+    <strong>Atajos:</strong>
+    <span class="kbd">B</span>
+    <span>Borrar</span>
+    <span class="kbd">T</span>
+    <span>Texto</span>
+    <span class="kbd">I</span>
+    <span>Imagen</span>
+    <span class="kbd">Ctrl+Z</span>
+    <span>Deshacer</span>
+    <span class="kbd">Ctrl+Y</span>
+    <span>Rehacer</span>
+  </div>
 
   <div class="row">
     <div class="left panel">
