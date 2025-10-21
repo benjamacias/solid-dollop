@@ -8,6 +8,7 @@
     :root{--bg:#0f1115;--panel:#151923;--ink:#e8eaf2;--muted:#9aa4b2;--accent:#7c9cff}
     *{box-sizing:border-box}
     body{margin:0;background:linear-gradient(180deg,#0c0e13,#0f1115);color:var(--ink);font:14px/1.4 system-ui,Segoe UI,Roboto,Helvetica,Arial}
+    html.lock-scroll,body.lock-scroll{overflow:hidden}
     header{position:sticky;top:0;z-index:10;background:rgba(21,25,35,.9);backdrop-filter:blur(8px);border-bottom:1px solid #232838}
     .bar{display:flex;gap:12px;align-items:center;padding:10px 14px;max-width:1200px;margin:0 auto;flex-wrap:wrap}
     .bar input[type=file]{display:none}
@@ -283,6 +284,9 @@
       $('#textControls').style.display  = (tool==='text')? 'block':'none';
       $('#imageControls').style.display = (tool==='image')? 'block':'none';
       if (floatCanvas){ floatCanvas.style.pointerEvents = (tool==='erase') ? 'none' : 'auto'; }
+      const lockScroll = tool==='erase' || tool==='image';
+      document.documentElement.classList.toggle('lock-scroll', lockScroll);
+      document.body.classList.toggle('lock-scroll', lockScroll);
     }
     $('#toolErase').onclick=()=>setTool('erase');
     $('#toolText').onclick=()=>setTool('text');
