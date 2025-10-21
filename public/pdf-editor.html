@@ -16,13 +16,45 @@
     .ghost{opacity:.7}
     .row{display:flex;gap:16px;max-width:1200px;margin:12px auto;padding:0 14px}
     .left{width:290px;flex:0 0 auto}
-    .right{flex:1 1 auto;min-height:80vh;background:#0c0f17;border:1px solid #1e2435;border-radius:16px;display:grid;place-items:center;position:relative;overflow:auto}
+    .right{flex:1 1 auto;min-height:80vh;background:#0c0f17;border:1px solid #1e2435;border-radius:16px;display:grid;place-items:center;position:relative;overflow:auto;width:100%;min-width:0;padding:24px}
     .panel{background:var(--panel);border:1px solid #232a3d;border-radius:16px;padding:14px}
     label{display:block;margin:.3rem 0 .2rem;color:var(--muted)}
     input[type=range]{width:100%}
     select, input[type=text], input[type=number], input[type=color]{width:100%;padding:8px;border-radius:10px;border:1px solid #2a3145;background:#0f1422;color:var(--ink)}
     canvas{max-width:100%;height:auto;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.35)}
     .page-wrap{position:relative}
+    #stage{display:inline-block;margin:0 auto;transform-origin:top center;transition:transform .2s ease, padding .2s ease;max-width:100%}
+    #stage canvas{display:block}
+    @media (max-width:768px){
+      .row{flex-direction:column;gap:14px;margin:12px auto 18px}
+      .left{width:100%}
+      .right{padding:18px;min-height:auto}
+      #stage{transform:scale(.95)}
+      .thumbs{padding:6px;margin-top:8px}
+    }
+    @media (max-width:560px){
+      header{position:static}
+      .bar{justify-content:center;gap:10px;padding:12px 10px}
+      .bar > :not(.btn){display:none}
+      .bar > .pager{display:flex}
+      .row{gap:10px;margin:0 auto;padding:0;max-width:100%}
+      .left{display:none}
+      .right{padding:10px;min-height:calc(100vh - 120px);border-radius:0;border:0}
+      .right::before{content:"";position:absolute;inset:0;border-radius:0;pointer-events:none;box-shadow:inset 0 0 0 1px #1e2435}
+      #stage{transform:scale(1);padding:0;width:100%}
+      .thumbs,.panel,footer,.hint,.callout,.steps,.merge-list,.badge,.tip,.tool{display:none}
+      .pager span,.pager label,.pager input{display:none}
+      .pager{gap:10px}
+      #undoBtn,#redoBtn{display:none}
+    }
+    @media (max-width:420px){
+      .bar{gap:8px;padding:10px}
+      .bar .btn{flex:1 1 44%;text-align:center}
+      .pager{width:100%;justify-content:center}
+      .pager span,.pager label,.pager input{display:none}
+      .right{padding:8px}
+      #stage{transform:scale(1.05)}
+    }
     .overlay{position:absolute;left:0;top:0}
     .floating{position:absolute;left:0;top:0;pointer-events:auto}
     .hint{color:var(--muted);font-size:12px}
@@ -56,9 +88,9 @@
       <label class="btn" for="mergeInput">Agregar PDFs…</label>
       <input id="mergeInput" type="file" accept="application/pdf" multiple />
 
-      <button id="toolErase" class="btn" aria-pressed="true">Borrar (B)</button>
-      <button id="toolText" class="btn">Texto (T)</button>
-      <button id="toolImage" class="btn">Imagen (I)</button>
+      <button id="toolErase" class="btn" aria-pressed="false">Borrar (B)</button>
+      <button id="toolText" class="btn" aria-pressed="false">Texto (T)</button>
+      <button id="toolImage" class="btn" aria-pressed="false">Imagen (I)</button>
       <button id="undoBtn" class="btn ghost">Deshacer (Ctrl+Z)</button>
       <button id="redoBtn" class="btn ghost">Rehacer (Ctrl+Y)</button>
 
@@ -80,7 +112,7 @@
     <div class="left panel">
       <h3 style="margin:0 0 8px">Herramientas</h3>
 
-      <section id="eraseControls">
+      <section id="eraseControls" style="display:none">
         <label>Tamaño del pincel</label>
         <input id="brushSize" type="range" min="6" max="120" value="36" />
         <div class="callout">
@@ -217,7 +249,7 @@
     const overlays = new Map();   // globalIndex -> dataURL
     const histories = new Map();  // globalIndex -> {stack:[], index:int}
 
-    let tool='erase';
+    let tool='';
     let isTypingText=false;
     window.__setTyping = (v)=>{ isTypingText = !!v; };
     window.__isTyping = ()=> isTypingText;
@@ -225,9 +257,10 @@
     window.__test_drawFloat = ()=>true;
 
     function setTool(name){
-      tool=name;
+      tool = name || '';
+      const activeId = tool ? 'tool'+tool.charAt(0).toUpperCase()+tool.slice(1) : '';
       ['toolErase','toolText','toolImage'].forEach(id=>{
-        document.getElementById(id).setAttribute('aria-pressed', String(id==='tool'+name.charAt(0).toUpperCase()+name.slice(1)));
+        document.getElementById(id).setAttribute('aria-pressed', String(id===activeId));
       });
       $('#eraseControls').style.display = (tool==='erase')? 'block':'none';
       $('#textControls').style.display  = (tool==='text')? 'block':'none';
@@ -237,7 +270,6 @@
     $('#toolErase').onclick=()=>setTool('erase');
     $('#toolText').onclick=()=>setTool('text');
     $('#toolImage').onclick=()=>setTool('image');
-    setTool('erase');
 
     // Utilidad: dataURL -> Uint8Array
     function dataURLToUint8Array(dataURL){
