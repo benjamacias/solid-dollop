@@ -141,6 +141,12 @@ export default function LandingPage() {
                 Ver casos reales
               </Link>
               <Link
+                href="/consola.html"
+                className="inline-flex items-center justify-center rounded-full border border-neutral-700 px-6 py-3 font-semibold text-neutral-200 transition hover:border-neutral-500 hover:text-white"
+              >
+                Abrir Terminal benja
+              </Link>
+              <Link
                 href="/pdf-editor.html"
                 target="_blank"
                 rel="noopener noreferrer"

@@ -1,0 +1,4 @@
+Proyectos:
+- Sistema de logística (Django + SQL Server)
+- excelAfipPy
+- TareasManagement (.NET)
