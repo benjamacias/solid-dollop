@@ -22,7 +22,11 @@ import {
   Zap,
 } from 'lucide-react';
 
+import Link from 'next/link';
+
 import ContactForm from './ContactForm';
+import Header from './Header';
+import Stat from './Stat';
 
 type ContactInfo = {
   name: string;
@@ -35,7 +39,7 @@ type ContactInfo = {
   description: string;
 };
 
-type Stat = {
+type StatMetric = {
   value: string;
   label: string;
   Icon: LucideIcon;
@@ -105,7 +109,7 @@ const contactInfo: ContactInfo = {
     'Diseñemos un roadmap realista, alineado al negocio y ejecutado con disciplina técnica. Yo me encargo de coordinar el delivery end-to-end.',
 };
 
-const stats: Stat[] = [
+const stats: StatMetric[] = [
   { value: '+4', label: 'años construyendo productos digitales', Icon: Clock },
   { value: '3+', label: 'equipos técnicos acompañados', Icon: Users },
   { value: '100%', label: 'entregas a tiempo en 2024', Icon: Target },
@@ -320,7 +324,7 @@ export default function LandingPage() {
           </div>
           <div className="grid flex-1 gap-4 sm:grid-cols-3">
             {stats.map((stat) => (
-              <Stat key={stat.label} {...stat} />
+              <Stat key={stat.label} kpi={stat.value} label={stat.label} />
             ))}
           </div>
         </section>
