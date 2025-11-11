@@ -1,7 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import type { MouseEvent } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   ChevronRight,
@@ -275,7 +274,46 @@ function ParticleBackground() {
   );
 }
 
+function buildMailtoUrl(subject: string, body: string) {
+  const params = new URLSearchParams({
+    subject,
+    body,
+  });
+
+  return `mailto:${contactInfo.email}?${params.toString()}`;
+}
+
 export default function LandingPage() {
+  const [activeService, setActiveService] = useState<number | null>(null);
+
+  const handleServiceContact = useCallback((service: Service) => {
+    const href = buildMailtoUrl(service.mailSubject, service.mailBody);
+
+    if (typeof window !== 'undefined') {
+      window.location.href = href;
+    }
+  }, []);
+
+  const handlePlanContact = useCallback((plan: Plan) => {
+    const href = buildMailtoUrl(
+      `Interés en plan ${plan.title}`,
+      [
+        'Hola Benjamín,',
+        '',
+        `Estoy interesado en el plan "${plan.title}".`,
+        '',
+        'Detalles adicionales:',
+        '[Compartí más contexto de tu proyecto aquí]',
+        '',
+        'Saludos.',
+      ].join('\n'),
+    );
+
+    if (typeof window !== 'undefined') {
+      window.location.href = href;
+    }
+  }, []);
+
   return (
     <div className="bg-neutral-950 text-white">
       <Header />
@@ -348,6 +386,8 @@ export default function LandingPage() {
                 }`}
                 onMouseEnter={() => setActiveService(index)}
                 onFocus={() => setActiveService(index)}
+                onMouseLeave={() => setActiveService(null)}
+                onBlur={() => setActiveService((current) => (current === index ? null : current))}
                 tabIndex={0}
               >
                 <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${service.gradient} opacity-0 transition-opacity duration-300 group-hover:opacity-5`} />
