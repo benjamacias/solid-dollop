@@ -89,6 +89,11 @@ type Particle = {
   duration: number;
 };
 
+function roundToDecimals(value: number, decimals: number) {
+  const factor = 10 ** decimals;
+  return Math.round(value * factor) / factor;
+}
+
 const contactInfo: ContactInfo = {
   name: 'Benjamín Macías',
   role: 'Fractional CTO',
@@ -237,10 +242,10 @@ function createDeterministicParticle(index: number): Particle {
   };
 
   return {
-    left: random(1) * 100,
-    top: random(2) * 100,
-    delay: random(3) * 5,
-    duration: 3 + random(4) * 4,
+    left: roundToDecimals(random(1) * 100, 4),
+    top: roundToDecimals(random(2) * 100, 4),
+    delay: roundToDecimals(random(3) * 5, 4),
+    duration: roundToDecimals(3 + random(4) * 4, 4),
   };
 }
 
