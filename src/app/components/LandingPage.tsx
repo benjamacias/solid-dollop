@@ -1,7 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import type { MouseEvent } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   ChevronRight,
@@ -22,7 +21,11 @@ import {
   Zap,
 } from 'lucide-react';
 
+import Link from 'next/link';
+
 import ContactForm from './ContactForm';
+import Header from './Header';
+import Stat from './Stat';
 
 type ContactInfo = {
   name: string;
@@ -35,7 +38,7 @@ type ContactInfo = {
   description: string;
 };
 
-type Stat = {
+type StatMetric = {
   value: string;
   label: string;
   Icon: LucideIcon;
@@ -105,7 +108,7 @@ const contactInfo: ContactInfo = {
     'Diseñemos un roadmap realista, alineado al negocio y ejecutado con disciplina técnica. Yo me encargo de coordinar el delivery end-to-end.',
 };
 
-const stats: Stat[] = [
+const stats: StatMetric[] = [
   { value: '+4', label: 'años construyendo productos digitales', Icon: Clock },
   { value: '3+', label: 'equipos técnicos acompañados', Icon: Users },
   { value: '100%', label: 'entregas a tiempo en 2024', Icon: Target },
@@ -271,7 +274,46 @@ function ParticleBackground() {
   );
 }
 
+function buildMailtoUrl(subject: string, body: string) {
+  const params = new URLSearchParams({
+    subject,
+    body,
+  });
+
+  return `mailto:${contactInfo.email}?${params.toString()}`;
+}
+
 export default function LandingPage() {
+  const [activeService, setActiveService] = useState<number | null>(null);
+
+  const handleServiceContact = useCallback((service: Service) => {
+    const href = buildMailtoUrl(service.mailSubject, service.mailBody);
+
+    if (typeof window !== 'undefined') {
+      window.location.href = href;
+    }
+  }, []);
+
+  const handlePlanContact = useCallback((plan: Plan) => {
+    const href = buildMailtoUrl(
+      `Interés en plan ${plan.title}`,
+      [
+        'Hola Benjamín,',
+        '',
+        `Estoy interesado en el plan "${plan.title}".`,
+        '',
+        'Detalles adicionales:',
+        '[Compartí más contexto de tu proyecto aquí]',
+        '',
+        'Saludos.',
+      ].join('\n'),
+    );
+
+    if (typeof window !== 'undefined') {
+      window.location.href = href;
+    }
+  }, []);
+
   return (
     <div className="bg-neutral-950 text-white">
       <Header />
@@ -320,7 +362,7 @@ export default function LandingPage() {
           </div>
           <div className="grid flex-1 gap-4 sm:grid-cols-3">
             {stats.map((stat) => (
-              <Stat key={stat.label} {...stat} />
+              <Stat key={stat.label} kpi={stat.value} label={stat.label} />
             ))}
           </div>
         </section>
@@ -344,6 +386,8 @@ export default function LandingPage() {
                 }`}
                 onMouseEnter={() => setActiveService(index)}
                 onFocus={() => setActiveService(index)}
+                onMouseLeave={() => setActiveService(null)}
+                onBlur={() => setActiveService((current) => (current === index ? null : current))}
                 tabIndex={0}
               >
                 <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${service.gradient} opacity-0 transition-opacity duration-300 group-hover:opacity-5`} />
