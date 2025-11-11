@@ -347,7 +347,7 @@ export default function LandingPage() {
       <div className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-300" style={cursorStyle} />
 
       <header
-        className={`sticky top-0 z-50 border-b transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-500 ${
           scrolled
             ? 'border-neutral-800/80 bg-neutral-950/95 shadow-2xl shadow-cyan-500/5 backdrop-blur-xl'
             : 'border-transparent bg-transparent'
@@ -392,7 +392,7 @@ export default function LandingPage() {
         </div>
       </header>
 
-      <main className="relative z-10 mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
+      <main className="relative z-10 mx-auto max-w-7xl px-4 pb-24 pt-[72px] sm:px-6 sm:pt-[80px] lg:px-8">
         <section className="relative flex flex-col gap-12 py-20 lg:min-h-[80vh] lg:flex-row lg:items-center">
           <ParticleBackground />
           <div className="relative z-10 lg:w-3/5">
