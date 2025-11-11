@@ -1,21 +1,19 @@
-import LandingPage from "./components/LandingPage";
+"use client";
 
-const NEWSBM_TECH_URL = "https://newsbm-tech.com/";
+import { useEffect } from "react";
+
+const REDIRECT_URL = "https://newsbm-tech.com/";
 
 export default function Home() {
+  useEffect(() => {
+    window.location.replace(REDIRECT_URL);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-neutral-950 text-white">
-      <header className="border-b border-neutral-800 bg-neutral-950/90 px-4 py-6">
-        <div className="mx-auto flex max-w-7xl justify-center">
-          <a
-            href={NEWSBM_TECH_URL}
-            className="inline-flex items-center justify-center rounded-full bg-cyan-500 px-6 py-3 font-semibold text-black shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400"
-          >
-            Visitar newsbm-tech.com
-          </a>
-        </div>
-      </header>
-      <LandingPage />
-    </div>
+    <main className="flex min-h-screen items-center justify-center bg-background text-foreground">
+      <p className="text-lg">
+        Redirigiendo a <a className="underline" href={REDIRECT_URL}>newsbm-tech.com</a>...
+      </p>
+    </main>
   );
 }
