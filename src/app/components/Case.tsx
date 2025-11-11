@@ -1,6 +1,7 @@
 // src/app/components/Case.tsx
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 interface CaseProps {
@@ -21,10 +22,13 @@ export default function Case({ title, tech, desc, image }: CaseProps) {
     >
       {image && (
         <div className="relative w-full h-48 bg-neutral-900 overflow-hidden">
-          <img
+          <Image
             src={image}
             alt={title}
-            className="w-full h-full object-cover object-top"
+            fill
+            className="object-cover object-top"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            priority={false}
           />
         </div>
       )}
