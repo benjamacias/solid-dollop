@@ -1,9 +1,8 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
-  ChevronRight,
   Clock,
   Code,
   Database,
@@ -13,9 +12,7 @@ import {
   Mail,
   MapPin,
   Phone,
-  Rocket,
   Shield,
-  Star,
   Target,
   Users,
   Zap,
@@ -76,17 +73,13 @@ type Plan = {
   price: string;
   featured: boolean;
   gradient: string;
+  mailSubject: string;
+  mailBody: string;
 };
 
 type FAQ = {
   q: string;
   a: string;
-};
-
-type NavLink = {
-  label: string;
-  href: string;
-  external?: boolean;
 };
 
 type Particle = {
@@ -194,6 +187,9 @@ const plans: Plan[] = [
     price: 'Desde $2.5K',
     featured: false,
     gradient: 'from-gray-600 to-gray-700',
+    mailSubject: 'Consulta: Plan Inicio rápido',
+    mailBody:
+      'Hola Benjamín,\n\nQuisiera conocer más sobre el plan "Inicio rápido" para lanzar mi MVP.\n\nDetalles de mi proyecto:\n[Compartí contexto aquí]\n\nGracias.',
   },
   {
     title: 'Evolutivo',
@@ -202,6 +198,9 @@ const plans: Plan[] = [
     price: 'Desde $4.5K/mes',
     featured: true,
     gradient: 'from-cyan-500 to-blue-500',
+    mailSubject: 'Consulta: Plan Evolutivo',
+    mailBody:
+      'Hola Benjamín,\n\nEstoy interesado en el plan "Evolutivo" para acompañamiento mensual.\n\nSituación actual:\n[Compartí el estado y objetivos]\n\nQuedo atento.',
   },
   {
     title: 'Soporte continuo',
@@ -210,15 +209,10 @@ const plans: Plan[] = [
     price: 'Desde $1K/mes',
     featured: false,
     gradient: 'from-purple-500 to-pink-500',
+    mailSubject: 'Consulta: Plan Soporte continuo',
+    mailBody:
+      'Hola Benjamín,\n\nNecesito más información sobre el plan "Soporte continuo" para mantenimiento.\n\nContexto del producto:\n[Describí el sistema y necesidades]\n\nSaludos.',
   },
-];
-
-const navLinks: NavLink[] = [
-  { label: 'Servicios', href: '#servicios' },
-  { label: 'Stack', href: '#stack' },
-  { label: 'Casos', href: '#casos' },
-  { label: 'FAQ', href: '#faq' },
-  { label: 'Editor PDF', href: '/pdf-editor.html', external: true },
 ];
 
 const faqs: FAQ[] = [
@@ -284,7 +278,28 @@ function buildMailtoUrl(subject: string, body: string) {
 }
 
 export default function LandingPage() {
-  const [activeService, setActiveService] = useState<number | null>(null);
+  const [activeService, setActiveService] = useState<number>(0);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      setMousePosition({ x: event.clientX, y: event.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setActiveService((current) => (current + 1) % services.length);
+    }, 4000);
+
+    return () => window.clearInterval(interval);
+  }, []);
 
   const handleServiceContact = useCallback((service: Service) => {
     const href = buildMailtoUrl(service.mailSubject, service.mailBody);
@@ -295,19 +310,7 @@ export default function LandingPage() {
   }, []);
 
   const handlePlanContact = useCallback((plan: Plan) => {
-    const href = buildMailtoUrl(
-      `Interés en plan ${plan.title}`,
-      [
-        'Hola Benjamín,',
-        '',
-        `Estoy interesado en el plan "${plan.title}".`,
-        '',
-        'Detalles adicionales:',
-        '[Compartí más contexto de tu proyecto aquí]',
-        '',
-        'Saludos.',
-      ].join('\n'),
-    );
+    const href = buildMailtoUrl(plan.mailSubject, plan.mailBody);
 
     if (typeof window !== 'undefined') {
       window.location.href = href;
@@ -315,11 +318,19 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="bg-neutral-950 text-white">
+    <div className="relative bg-neutral-950 text-white">
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(600px at ${mousePosition.x}px ${mousePosition.y}px, rgba(34, 211, 238, 0.14), transparent 80%)`,
+        }}
+      />
       <Header />
 
-      <main className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
-        <section className="flex flex-col gap-12 py-16 lg:flex-row lg:items-center">
+      <main className="relative z-10 mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
+        <section className="relative flex flex-col gap-12 py-16 lg:flex-row lg:items-center">
+          <ParticleBackground />
           <div className="lg:w-3/5">
             <span className="rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-xs uppercase tracking-[0.3em] text-cyan-300">
               Fractional CTO · Rosario, ARG
@@ -350,14 +361,6 @@ export default function LandingPage() {
               >
                 Abrir Terminal benja
               </Link>
-              <Link
-                href="/pdf-editor.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-full border border-cyan-500/30 px-6 py-3 font-semibold text-cyan-200 transition hover:border-cyan-400 hover:text-cyan-100"
-              >
-                Abrir editor PDF
-              </Link>
             </div>
           </div>
           <div className="grid flex-1 gap-4 sm:grid-cols-3">
@@ -386,9 +389,6 @@ export default function LandingPage() {
                 }`}
                 onMouseEnter={() => setActiveService(index)}
                 onFocus={() => setActiveService(index)}
-                onMouseLeave={() => setActiveService(null)}
-                onBlur={() => setActiveService((current) => (current === index ? null : current))}
-                tabIndex={0}
               >
                 <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${service.gradient} opacity-0 transition-opacity duration-300 group-hover:opacity-5`} />
                 <div className={`mb-6 inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r ${service.gradient} p-3 text-white transition-transform duration-300 group-hover:scale-110`}>

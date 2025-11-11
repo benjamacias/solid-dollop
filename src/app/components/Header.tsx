@@ -2,6 +2,8 @@
 
 'use client';
 
+import { useEffect, useState } from 'react';
+
 interface NavLinkProps {
   href: string;
   children: React.ReactNode;
@@ -51,8 +53,29 @@ function NavLink({ href, children, className = '', target, rel }: NavLinkProps) 
 }
 
 export default function Header() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 24);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <header className="sticky top-0 z-20 border-b border-neutral-900/80 bg-neutral-950/80 backdrop-blur">
+    <header
+      className={`sticky top-0 z-20 border-b transition-all duration-500 ${
+        scrolled
+          ? 'border-neutral-800/80 bg-neutral-950/95 backdrop-blur-xl shadow-lg shadow-cyan-500/5'
+          : 'border-transparent bg-neutral-950/60 backdrop-blur'
+      }`}
+    >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <span className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-400">
           Benjamín Macías
