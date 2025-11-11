@@ -233,15 +233,23 @@ const faqs: FAQ[] = [
   },
 ];
 
+function createDeterministicParticle(index: number): Particle {
+  const random = (offset: number) => {
+    const value = Math.sin(index * 9973 + offset * 1013) * 43758.5453123;
+    return value - Math.floor(value);
+  };
+
+  return {
+    left: random(1) * 100,
+    top: random(2) * 100,
+    delay: random(3) * 5,
+    duration: 3 + random(4) * 4,
+  };
+}
+
 function ParticleBackground() {
   const particles = useMemo<Particle[]>(
-    () =>
-      Array.from({ length: 20 }, () => ({
-        left: Math.random() * 100,
-        top: Math.random() * 100,
-        delay: Math.random() * 5,
-        duration: 3 + Math.random() * 4,
-      })),
+    () => Array.from({ length: 20 }, (_, index) => createDeterministicParticle(index)),
     [],
   );
 
