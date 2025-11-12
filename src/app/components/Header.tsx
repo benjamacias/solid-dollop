@@ -80,6 +80,7 @@ export default function Header() {
         <span className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-400">
           Benjamín Macías
         </span>
+        <a href="https://newsbm-tech.com/" className="inline-flex items-center justify-center rounded-full bg-cyan-500 px-6 py-3 font-semibold text-black shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400">Visitar newsbm-tech.com</a>
         <nav className="flex items-center gap-5 text-sm text-neutral-300">
           <NavLink className="hover:text-white" href="#servicios">
             Servicios
