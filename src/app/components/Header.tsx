@@ -10,12 +10,17 @@ interface NavLinkProps {
   className?: string;
   target?: string;
   rel?: string;
+  onNavigate?: () => void;
 }
 
-function NavLink({ href, children, className = '', target, rel }: NavLinkProps) {
+function NavLink({ href, children, className = '', target, rel, onNavigate }: NavLinkProps) {
   const isHashLink = href.startsWith('#');
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (onNavigate) {
+      onNavigate();
+    }
+
     if (!isHashLink) {
       return;
     }
@@ -54,6 +59,7 @@ function NavLink({ href, children, className = '', target, rel }: NavLinkProps) 
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,10 +69,21 @@ export default function Header() {
     handleScroll();
     window.addEventListener('scroll', handleScroll);
 
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <header
@@ -76,30 +93,99 @@ export default function Header() {
           : 'border-transparent bg-neutral-950/60 backdrop-blur'
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-        <span className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-400">
-          Benjamín Macías
-        </span>
-        <a href="https://newsbm-tech.com/" className="inline-flex items-center justify-center rounded-full bg-cyan-500 px-6 py-3 font-semibold text-black shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400">Visitar newsbm-tech.com</a>
-        <nav className="flex items-center gap-5 text-sm text-neutral-300">
-          <NavLink className="hover:text-white" href="#servicios">
+      <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-3">
+          <span className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-300">
+            Benjamín Macías
+          </span>
+          <div className="flex items-center gap-3 md:hidden">
+            <a
+              href="https://newsbm-tech.com/"
+              className="inline-flex items-center rounded-full bg-cyan-500 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-black shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400"
+            >
+              newsbm-tech.com
+            </a>
+            <button
+              type="button"
+              onClick={() => setMenuOpen((prev) => !prev)}
+              aria-label="Abrir menú"
+              className="rounded-full border border-neutral-700 p-2 text-neutral-200 transition hover:border-cyan-500 hover:text-white"
+            >
+              <span className="flex h-5 w-5 flex-col justify-between">
+                <span
+                  className={`h-0.5 rounded-full bg-current transition ${menuOpen ? 'translate-y-2 rotate-45' : ''}`}
+                ></span>
+                <span className={`h-0.5 rounded-full bg-current transition ${menuOpen ? 'opacity-0' : ''}`}></span>
+                <span
+                  className={`h-0.5 rounded-full bg-current transition ${menuOpen ? '-translate-y-2 -rotate-45' : ''}`}
+                ></span>
+              </span>
+            </button>
+          </div>
+          <div className="hidden items-center gap-4 md:flex">
+            <nav className="flex items-center gap-6 text-sm text-neutral-300">
+              <NavLink className="hover:text-white" href="#servicios">
+                Servicios
+              </NavLink>
+              <NavLink className="hover:text-white" href="#stack">
+                Stack
+              </NavLink>
+              <NavLink className="hover:text-white" href="#casos">
+                Casos
+              </NavLink>
+              <NavLink className="hover:text-white" href="#faq">
+                FAQ
+              </NavLink>
+              <NavLink className="hover:text-white" href="/pdf-editor.html" target="_blank" rel="noopener noreferrer">
+                Editor PDF
+              </NavLink>
+              <NavLink
+                className="rounded-full border border-cyan-500/60 px-4 py-1 text-cyan-300 transition hover:bg-cyan-500/10"
+                href="#contacto"
+              >
+                Agenda una llamada
+              </NavLink>
+            </nav>
+            <a
+              href="https://newsbm-tech.com/"
+              className="inline-flex items-center rounded-full bg-cyan-500 px-6 py-3 text-sm font-semibold text-black shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400"
+            >
+              Visitar newsbm-tech.com
+            </a>
+          </div>
+        </div>
+        <nav
+          className={`md:hidden ${
+            menuOpen
+              ? 'mt-4 flex flex-col gap-4 border-t border-neutral-800 pt-4 text-sm text-neutral-200'
+              : 'hidden'
+          }`}
+        >
+          <NavLink className="hover:text-white" href="#servicios" onNavigate={closeMenu}>
             Servicios
           </NavLink>
-          <NavLink className="hover:text-white" href="#stack">
+          <NavLink className="hover:text-white" href="#stack" onNavigate={closeMenu}>
             Stack
           </NavLink>
-          <NavLink className="hover:text-white" href="#casos">
+          <NavLink className="hover:text-white" href="#casos" onNavigate={closeMenu}>
             Casos
           </NavLink>
-          <NavLink className="hover:text-white" href="#faq">
+          <NavLink className="hover:text-white" href="#faq" onNavigate={closeMenu}>
             FAQ
           </NavLink>
-          <NavLink className="hover:text-white" href="/pdf-editor.html" target="_blank" rel="noopener noreferrer">
+          <NavLink
+            className="hover:text-white"
+            href="/pdf-editor.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            onNavigate={closeMenu}
+          >
             Editor PDF
           </NavLink>
           <NavLink
-            className="rounded-full border border-cyan-500/60 px-4 py-1 text-cyan-300 transition hover:bg-cyan-500/10"
+            className="rounded-full border border-cyan-500/60 px-4 py-2 text-center text-cyan-300 transition hover:bg-cyan-500/10"
             href="#contacto"
+            onNavigate={closeMenu}
           >
             Agenda una llamada
           </NavLink>
