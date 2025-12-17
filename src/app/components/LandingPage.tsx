@@ -419,7 +419,8 @@ export default function LandingPage() {
               <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text">Stack & prácticas</span>
             </h2>
             <p className="max-w-2xl text-lg text-neutral-300">
-              Tecnologías con las que trabajo a diario y métodos para mantener la calidad.
+              Tecnologías y prácticas que soportan la propuesta de valor: backend, bases de datos, frontend, DevOps y
+              seguridad alineados a objetivos de negocio.
             </p>
           </div>
 
