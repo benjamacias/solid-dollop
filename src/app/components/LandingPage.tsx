@@ -366,6 +366,44 @@ export default function LandingPage() {
           </div>
         </section>
 
+        <section className="py-16">
+          <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
+            <div className="space-y-4">
+              <h2 className="text-3xl font-bold tracking-tight text-transparent sm:text-4xl">
+                <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text">Sobre mí</span>
+              </h2>
+              <p className="text-lg leading-relaxed text-neutral-300">
+                Soy Benjamín Macías, ingeniero de software con más de cuatro años liderando equipos boutique y
+                acompañando startups y pymes tecnológicas. Me formé diseñando arquitecturas escalables y coordinando
+                entregas críticas donde cada iteración debía mover métricas del negocio.
+              </p>
+              <p className="text-lg leading-relaxed text-neutral-300">
+                Mi propósito es ser tu socio técnico: traduzco objetivos comerciales en planes accionables,
+                elimino bloqueos de delivery y mantengo la calidad como ventaja competitiva. Me involucro
+                personalmente para que cada versión llegue a tiempo y con impacto.
+              </p>
+            </div>
+
+            <div className="rounded-3xl border border-neutral-800 bg-neutral-900/30 p-6">
+              <h3 className="mb-4 text-xl font-semibold text-white">A quién acompaño</h3>
+              <ul className="space-y-3 text-neutral-300">
+                <li className="flex gap-3">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-cyan-400" aria-hidden />
+                  <span>Fundadores B2B que necesitan pasar de prototipo a producto estable sin frenar ventas.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-cyan-400" aria-hidden />
+                  <span>Equipos de producto que buscan ordenar backlog, arquitectura y métricas para escalar.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-cyan-400" aria-hidden />
+                  <span>Empresas tradicionales que quieren digitalizar procesos críticos con bajo riesgo.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
         <section id="servicios" className="py-20">
           <div className="mb-12 flex flex-col items-start gap-3">
             <h2 className="text-3xl font-bold tracking-tight text-transparent sm:text-4xl">
