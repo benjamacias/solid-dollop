@@ -48,8 +48,6 @@ type Service = {
   description: string;
   bullets: string[];
   gradient: string;
-  mailSubject: string;
-  mailBody: string;
 };
 
 type StackItem = {
@@ -116,35 +114,29 @@ const services: Service[] = [
   {
     id: 'consultoria',
     Icon: Lightbulb,
-    title: 'Consultoría técnica',
-    description: 'Alineo la visión del negocio con decisiones de arquitectura y roadmap ejecutable.',
+    title: 'Estrategia técnica para productos en crecimiento',
+    description:
+      'Útil cuando ya existe tracción y necesitás ordenar el roadmap con criterios técnicos y de negocio. Definimos arquitectura, riesgos y milestones claros para que tu equipo avance sin fricción. Resuelve la falta de foco y las iteraciones sin cierre.',
     bullets: ['Workshops de descubrimiento', 'Mapeo de riesgos y costos', 'Planes de implementación por etapas'],
     gradient: 'from-purple-500 to-cyan-400',
-    mailSubject: 'Consulta: Consultoría técnica',
-    mailBody:
-      'Hola Benjamín,\n\nEstoy interesado en tus servicios de consultoría técnica.\n\nDetalles del proyecto:\n[Describe tu desafío aquí]\n\nSaludos.',
   },
   {
     id: 'desarrollo',
     Icon: Code,
-    title: 'Desarrollo end-to-end',
-    description: 'Equipo boutique para diseñar, construir y lanzar MVPs o módulos críticos.',
+    title: 'Desarrollo end-to-end de MVPs y módulos críticos',
+    description:
+      'Cuando necesitás lanzar rápido sin sacrificar calidad: armamos un equipo boutique para diseñar, construir y desplegar. Cubrimos discovery, UX y delivery con prácticas sólidas para evitar retrabajos. Soluciona la parálisis técnica y reduce el time-to-market.',
     bullets: ['Product discovery ágil', 'Implementación iterativa', 'QA y automatizaciones básicas'],
     gradient: 'from-cyan-500 to-blue-500',
-    mailSubject: 'Consulta: Desarrollo end-to-end',
-    mailBody:
-      'Hola Benjamín,\n\nEstoy interesado en desarrollo end-to-end.\n\nDetalles del proyecto:\n[Describe tu proyecto aquí]\n\nSaludos.',
   },
   {
     id: 'mentoria',
     Icon: Users,
-    title: 'Mentoría de equipos',
-    description: 'Acompaño al staff interno para acelerar adopción de buenas prácticas y reducir deuda.',
+    title: 'Mentoría y coaching de equipos internos',
+    description:
+      'Ideal para equipos que necesitan subir el estándar sin frenar el delivery. Trabajo junto al staff para instalar buenas prácticas, revisar código y medir la mejora. Ataca la deuda técnica acumulada y evita que la calidad dependa de pocas personas.',
     bullets: ['Code reviews dirigidos', 'Capacitación en vivo', 'Tablero de métricas operativo'],
     gradient: 'from-blue-500 to-purple-500',
-    mailSubject: 'Consulta: Mentoría de equipos',
-    mailBody:
-      'Hola Benjamín,\n\nEstoy interesado en mentoría para mi equipo técnico.\n\nDetalles:\n[Describe tu situación actual]\n\nSaludos.',
   },
 ];
 
@@ -306,14 +298,6 @@ export default function LandingPage() {
     return () => window.clearInterval(interval);
   }, []);
 
-  const handleServiceContact = useCallback((service: Service) => {
-    const href = buildMailtoUrl(service.mailSubject, service.mailBody);
-
-    if (typeof window !== 'undefined') {
-      window.location.href = href;
-    }
-  }, []);
-
   const handlePlanContact = useCallback((plan: Plan) => {
     const href = buildMailtoUrl(plan.mailSubject, plan.mailBody);
 
@@ -438,14 +422,13 @@ export default function LandingPage() {
                     </li>
                   ))}
                 </ul>
-                <button
-                  type="button"
-                  onClick={() => handleServiceContact(service)}
+                <Link
+                  href="#contacto"
                   className="group/btn flex w-full items-center justify-center gap-2 rounded-xl border border-neutral-700 bg-neutral-800/50 px-4 py-3 text-sm font-semibold text-neutral-200 transition-all duration-300 hover:border-cyan-500/30 hover:bg-neutral-700/50 hover:text-white"
                 >
                   <Mail className="h-4 w-4" />
                   Consultar servicio
-                </button>
+                </Link>
               </div>
             ))}
           </div>
