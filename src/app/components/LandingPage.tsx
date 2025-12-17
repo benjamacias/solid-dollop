@@ -336,35 +336,26 @@ export default function LandingPage() {
       <main className="relative z-10 mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
         <section className="relative flex flex-col gap-12 py-16 lg:flex-row lg:items-center">
           <ParticleBackground />
-          <div className="lg:w-3/5">
+          <div className="flex flex-col items-center text-center lg:w-3/5">
             <span className="rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-xs uppercase tracking-[0.3em] text-cyan-300">
               Fractional CTO · Rosario, ARG
             </span>
             <h1 className="mt-6 text-4xl font-bold leading-tight sm:text-5xl">
-              Transformo ideas en productos robustos listos para escalar
+              Transformo ideas en productos que crecen
             </h1>
-            <p className="mt-4 max-w-2xl text-lg text-neutral-300">
+            <p className="mt-3 text-xl text-neutral-100 sm:text-2xl">
+              Socio técnico para alinear visión, arquitectura y delivery con foco en resultados.
+            </p>
+            <p className="mt-4 max-w-2xl text-lg text-neutral-300 mx-auto lg:mx-auto">
               Diseñemos un roadmap realista, alineado al negocio y ejecutado con disciplina técnica. Yo
               me encargo de coordinar el delivery end-to-end.
             </p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-6 flex justify-center">
               <Link
                 href="#contacto"
-                className="inline-flex items-center justify-center rounded-full bg-cyan-500 px-6 py-3 font-semibold text-black shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400"
+                className="inline-flex items-center justify-center rounded-full bg-cyan-500 px-8 py-3 text-lg font-semibold text-black shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400"
               >
-                Hablemos de tu proyecto
-              </Link>
-              <Link
-                href="#casos"
-                className="inline-flex items-center justify-center rounded-full border border-neutral-700 px-6 py-3 font-semibold text-neutral-200 transition hover:border-neutral-500 hover:text-white"
-              >
-                Ver casos reales
-              </Link>
-              <Link
-                href="/consola.html"
-                className="inline-flex items-center justify-center rounded-full border border-neutral-700 px-6 py-3 font-semibold text-neutral-200 transition hover:border-neutral-500 hover:text-white"
-              >
-                Abrir Terminal benja
+                Hablemos
               </Link>
             </div>
           </div>
