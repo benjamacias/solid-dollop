@@ -59,6 +59,7 @@ type StackItem = {
 type CaseStudy = {
   title: string;
   tech: string;
+  intro: string;
   description: string;
   results: string[];
   gradient: string;
@@ -153,6 +154,8 @@ const cases: CaseStudy[] = [
   {
     title: 'Sistema de facturación para contadores',
     tech: 'Django · SOAP · AFIP',
+    intro:
+      'Cliente: estudio contable regional. Problema: errores y demoras en facturación AFIP. Solución: portal centralizado con roles y comprobantes automáticos. Impacto: +40 % de eficiencia y 0 rechazos.',
     description:
       'CRUD completo de clientes y cuentas corrientes con integración directa a AFIP. Modelo de usuario personalizado con roles y envío automatizado de emails.',
     results: ['+40% eficiencia', '0 errores AFIP', '100% digital'],
@@ -161,6 +164,8 @@ const cases: CaseStudy[] = [
   {
     title: 'Sistema de gestión de logística',
     tech: 'Django · SQL Server · ARCA',
+    intro:
+      'Cliente: operador logístico nacional. Problema: doble carga y papeleo para Carta de Porte. Solución: sistema unificado con facturación integrada y controles operativos. Impacto: –60 % de tiempo en procesos y mayor capacidad.',
     description:
       'CRUD para envíos, clientes, vehículos y conductores con facturación integrada usando Carta de Porte Electrónica de AFIP. Unifiqué datos operativos eliminando dobles cargas.',
     results: ['-60% tiempo procesos', '+25% capacidad', '0 papel'],
@@ -169,6 +174,8 @@ const cases: CaseStudy[] = [
   {
     title: 'Dashboards analíticos',
     tech: 'Python · Chart.js · PostgreSQL',
+    intro:
+      'Cliente: dirección de operaciones retail. Problema: falta de visibilidad unificada de KPIs. Solución: pipelines de datos con dashboards en tiempo real. Impacto: +80 % de visibilidad y decisiones en minutos.',
     description:
       'Visualización de métricas de negocio en tiempo real con gráficos interactivos para toma de decisiones basada en datos.',
     results: ['+80% visibilidad', 'Decisión en minutos', 'KPIs en vivo'],
@@ -318,7 +325,7 @@ export default function LandingPage() {
       <Header />
 
       <main className="relative z-10 mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
-        <section className="relative flex flex-col gap-12 py-16 lg:flex-row lg:items-center">
+        <section className="relative flex flex-col items-center gap-12 py-16 text-center">
           <ParticleBackground />
           <div className="flex flex-col items-center text-center lg:w-3/5">
             <span className="rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-xs uppercase tracking-[0.3em] text-cyan-300">
@@ -342,11 +349,6 @@ export default function LandingPage() {
                 Hablemos
               </Link>
             </div>
-          </div>
-          <div className="grid flex-1 gap-4 sm:grid-cols-3">
-            {stats.map((stat) => (
-              <Stat key={stat.label} kpi={stat.value} label={stat.label} />
-            ))}
           </div>
         </section>
 
@@ -474,9 +476,14 @@ export default function LandingPage() {
         </section>
 
         <section id="casos" className="py-20">
+          <div className="mb-10 grid gap-4 sm:grid-cols-3">
+            {stats.map((stat) => (
+              <Stat key={`casos-${stat.label}`} kpi={stat.value} label={stat.label} />
+            ))}
+          </div>
           <div className="mb-12 flex flex-col items-start gap-3">
             <h2 className="text-3xl font-bold tracking-tight text-transparent sm:text-4xl">
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text">Casos recientes</span>
+              <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text">Proyectos con resultados comprobados</span>
             </h2>
             <p className="max-w-2xl text-lg text-neutral-300">
               Proyectos donde lideré estrategia técnica y ejecución con impacto medible.
@@ -493,6 +500,7 @@ export default function LandingPage() {
                 <div className="relative p-8">
                   <div className="mb-4 text-sm font-mono text-neutral-400">{project.tech}</div>
                   <h3 className="mb-4 text-xl font-semibold text-white">{project.title}</h3>
+                  <p className="mb-4 text-sm text-cyan-200/80">{project.intro}</p>
                   <p className="mb-6 leading-relaxed text-neutral-300">{project.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {project.results.map((result) => (
