@@ -187,36 +187,36 @@ const cases: CaseStudy[] = [
 const plans: Plan[] = [
   {
     title: 'Inicio rápido',
-    note: 'MVP en semanas',
+    note: 'MVP listo para validaciones internas en semanas',
     features: ['Brief y alcance cerrado', 'Entrega en 3-4 semanas', 'Documentación esencial', 'Soporte 30 días'],
-    price: 'Desde $300/mes',
+    price: 'Desde USD 300 al mes',
     featured: false,
     gradient: 'from-gray-600 to-gray-700',
     mailSubject: 'Consulta: Plan Inicio rápido',
     mailBody:
-      'Hola Benjamín,\n\nQuisiera conocer más sobre el plan "Inicio rápido" para lanzar mi MVP.\n\nDetalles de mi proyecto:\n[Compartí contexto aquí]\n\nGracias.',
+      'Hola Benjamín,\n\nQuisiera conocer más sobre el plan "Inicio rápido" para lanzar un MVP con foco en resultados medibles.\n\nContexto del proyecto:\n[Compartí hitos y expectativas]\n\nQuedo atento a próximos pasos.',
   },
   {
     title: 'Evolutivo',
-    note: 'Iteraciones mensuales',
+    note: 'Evolución mensual con equipo extendido',
     features: ['Equipo extendido', 'Tablero de métricas', 'Revisiones quincenales', 'Soporte prioritario'],
-    price: 'Desde $1K/mes',
+    price: 'Desde USD 1000 al mes',
     featured: true,
     gradient: 'from-cyan-500 to-blue-500',
     mailSubject: 'Consulta: Plan Evolutivo',
     mailBody:
-      'Hola Benjamín,\n\nEstoy interesado en el plan "Evolutivo" para acompañamiento mensual.\n\nSituación actual:\n[Compartí el estado y objetivos]\n\nQuedo atento.',
+      'Hola Benjamín,\n\nEstoy interesado en el plan "Evolutivo" para acompañamiento mensual con foco en métricas.\n\nSituación actual y objetivos:\n[Compartí el estado, roadmap y KPIs]\n\nGracias y quedo atento.',
   },
   {
     title: 'Soporte continuo',
-    note: 'Mantenimiento',
+    note: 'Operación y mantenimiento con SLA básico',
     features: ['Monitoreo básico', 'Gestión de incidencias', 'Actualizaciones planificadas', 'Backups automáticos'],
-    price: 'Desde $200/mes',
+    price: 'Desde USD 200 al mes',
     featured: false,
     gradient: 'from-purple-500 to-pink-500',
     mailSubject: 'Consulta: Plan Soporte continuo',
     mailBody:
-      'Hola Benjamín,\n\nNecesito más información sobre el plan "Soporte continuo" para mantenimiento.\n\nContexto del producto:\n[Describí el sistema y necesidades]\n\nSaludos.',
+      'Hola Benjamín,\n\nNecesito más información sobre el plan "Soporte continuo" para asegurar operación estable.\n\nContexto del producto y SLAs deseados:\n[Describí el sistema, criticidad y expectativas]\n\nQuedo en contacto.',
   },
 ];
 
