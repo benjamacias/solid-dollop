@@ -571,10 +571,11 @@ export default function LandingPage() {
         <section id="contacto" className="py-20">
           <div className="mb-12 flex flex-col items-start gap-3">
             <h2 className="text-3xl font-bold tracking-tight text-transparent sm:text-4xl">
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text">Contacto</span>
+              <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text">Hablemos</span>
             </h2>
             <p className="max-w-2xl text-lg text-neutral-300">
-              Contame qué querés construir y diseñamos juntos el siguiente paso.
+              Primera consulta exploratoria y sin compromiso. Contame qué querés construir y diseñamos juntos el
+              siguiente paso.
             </p>
           </div>
 
@@ -586,6 +587,7 @@ export default function LandingPage() {
                 <p className="mb-8 mt-2 text-neutral-300">
                   Completá el formulario y coordinamos una llamada exploratoria sin costo.
                 </p>
+                <p className="mb-6 text-sm text-neutral-400">Recibirás una respuesta en 24–48 h.</p>
                 <div className="space-y-6">
                   <ContactForm />
                 </div>

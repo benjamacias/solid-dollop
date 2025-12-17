@@ -28,7 +28,7 @@ export default function ContactForm({ disabled = false }: ContactFormProps) {
     const payload: ContactPayload = {
       from_name: sanitize(formData.get('from_name')),
       reply_to: sanitize(formData.get('reply_to')),
-      subject: sanitize(formData.get('subject')).slice(0, 120),
+      subject: 'Consulta de contacto',
       message: sanitize(formData.get('message')).slice(0, 2000),
     };
 
@@ -81,7 +81,7 @@ export default function ContactForm({ disabled = false }: ContactFormProps) {
     >
       <div className="grid gap-3 sm:grid-cols-2">
         <label className="flex flex-col gap-1">
-          <span>Nombre</span>
+          <span>Name</span>
           <input
             name="from_name"
             required
@@ -99,15 +99,7 @@ export default function ContactForm({ disabled = false }: ContactFormProps) {
         </label>
       </div>
       <label className="flex flex-col gap-1">
-        <span>Asunto</span>
-        <input
-          name="subject"
-          maxLength={120}
-          className="rounded-xl border border-neutral-800 bg-neutral-950 px-3 py-2 text-white outline-none focus:ring-2 focus:ring-cyan-500/60"
-        />
-      </label>
-      <label className="flex flex-col gap-1">
-        <span>Mensaje</span>
+        <span>Message</span>
         <textarea
           name="message"
           rows={5}
@@ -121,7 +113,7 @@ export default function ContactForm({ disabled = false }: ContactFormProps) {
         disabled={disabled || !CONTACT_ENABLED || status === 'sending'}
         className="mt-2 inline-flex items-center justify-center rounded-xl bg-cyan-500 px-4 py-2 font-semibold text-black transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:bg-neutral-700 disabled:text-neutral-300"
       >
-        {status === 'sending' ? 'Enviando…' : 'Enviar mensaje'}
+        {status === 'sending' ? 'Enviando…' : 'Iniciar conversación'}
       </button>
       {status === 'ok' ? (
         <p className="text-sm text-emerald-300">Mensaje enviado. ¡Gracias!</p>
